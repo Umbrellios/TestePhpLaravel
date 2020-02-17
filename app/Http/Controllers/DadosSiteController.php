@@ -20,7 +20,8 @@
     }
 
     public function dadosSite(Request $request){
-      $busca = $request->input('busca');
+      $url = $request->input('busca');
+      $busca = preg_replace('/[ -]+/' , '+' , $url);
       $html = file_get_contents('https://www.uplexis.com.br/blog/?s='.$busca);
       $crawler = new Crawler($html);
       $elementoTitulo = $crawler->filterXPath("//div[contains(@class, 'title')]")->extract(['_text']);
